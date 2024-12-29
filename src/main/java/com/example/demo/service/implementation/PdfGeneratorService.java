@@ -8,6 +8,10 @@ import com.example.demo.util.CommonUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +28,22 @@ public class PdfGeneratorService implements IPdfGeneratorService {
     public PdfGeneratorService(IExcelService excelService, IWordService wordService) {
         this.excelService = excelService;
         this.wordService = wordService;
+    }
+    public static void checkAndCreateDirectory(String outputDirectory) {
+        Path path = Paths.get(outputDirectory);
+
+        // Check if the directory exists
+        if (Files.notExists(path)) {
+            try {
+                // If the directory doesn't exist, create it
+                Files.createDirectories(path);
+                System.out.println("Directory created: " + outputDirectory);
+            } catch (IOException e) {
+                System.err.println("Failed to create directory: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Directory already exists: " + outputDirectory);
+        }
     }
 
     @Override
@@ -51,6 +71,7 @@ public class PdfGeneratorService implements IPdfGeneratorService {
 
     private void convertWordToPdf(PdfData data) {
         String fileName = CommonUtils.generateFileName(data.getSt_full_name()) + OUTPUT_EXTENSION_PDF;
+        checkAndCreateDirectory(OUTPUT_DIRECTORY);
         try {
             String outputPdfPath = OUTPUT_DIRECTORY + fileName;
             Map<String, String> record = CommonUtils.createRecordFromPdfData(data);
@@ -84,6 +105,7 @@ public class PdfGeneratorService implements IPdfGeneratorService {
     }
     private void convertWordToDocx(PdfData data) {
         String fileName = CommonUtils.generateFileName(data.getSt_full_name()) + OUTPUT_EXTENSION_DOCX;
+        checkAndCreateDirectory(OUTPUT_DIRECTORY);
         try {
             String outputPdfPath = OUTPUT_DIRECTORY + fileName;
             Map<String, String> record = CommonUtils.createRecordFromPdfData(data);
