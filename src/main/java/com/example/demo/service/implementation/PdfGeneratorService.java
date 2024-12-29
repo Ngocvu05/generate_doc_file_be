@@ -14,7 +14,7 @@ import java.util.Map;
 @Service
 public class PdfGeneratorService implements IPdfGeneratorService {
     private static final String TEMPLATE_PATH = "D:/myFolder/template.docx"; // Template location
-    private static final String OUTPUT_DIRECTORY = "D:/myFolder/GeneratedPDFs/";
+    private static final String OUTPUT_DIRECTORY = "D:/myFolder/result/";
     private static final String OUTPUT_EXTENSION_DOCX = ".docx";
     private static final String OUTPUT_EXTENSION_PDF = ".pdf";
 
