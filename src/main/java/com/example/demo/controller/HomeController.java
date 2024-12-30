@@ -23,7 +23,7 @@ import java.util.zip.ZipOutputStream;
 @RequestMapping("/api")
 public class HomeController {
 
-    @CrossOrigin(origins = "http://127.0.0.1:5500") // Allow requests from this origin
+    @CrossOrigin(origins = "http://127.0.0.1") // Allow requests from this origin
     @PostMapping("/generate-pdfs/home")
     public ResponseEntity<byte[]> generatePDFs(@RequestParam("jsonFile") MultipartFile jsonFile) {
         try {
