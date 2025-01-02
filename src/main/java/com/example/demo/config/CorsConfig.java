@@ -13,19 +13,15 @@ public class CorsConfig implements WebMvcConfigurer {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Allow all endpoints
-                        .allowedOrigins("http://127.0.0.1:5500") // Allow this specific origin
+                        .allowedOrigins("http://127.0.0.1:5500")
+                        .allowedOrigins("https://ngocvu05.github.io")// Allow this specific origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow these HTTP methods
                         .allowedHeaders("*") // Allow all headers
                         .allowCredentials(true); // Allow cookies if needed
             }
         };
     }
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*") // Allow all origins or specify your frontend URL
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
-    }
+
 }
 
 
