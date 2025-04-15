@@ -5,12 +5,15 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xwpf.usermodel.*;
 
+import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CommonUtils {
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
+
     public static String generateFileName(String name) {
         if (name == null || name.isEmpty()) {
             return "";
@@ -129,7 +132,7 @@ public class CommonUtils {
                 case STRING:
                     return cell.getStringCellValue();
                 case NUMERIC:
-                    return String.valueOf(cell.getNumericCellValue());
+                    return String.valueOf(formatValue(cell.getNumericCellValue()));
                 case BOOLEAN:
                     return String.valueOf(cell.getBooleanCellValue());
                 default:
@@ -137,5 +140,19 @@ public class CommonUtils {
             }
         }
         return "";
+    }
+
+    private static String formatValue(Object value) {
+        if (value instanceof Number) {
+            double doubleValue = ((Number) value).doubleValue();
+
+            // Check if the value has a decimal part
+            if (doubleValue == Math.floor(doubleValue)) {
+                return String.valueOf((long) doubleValue); // No decimals
+            } else {
+                return DECIMAL_FORMAT.format(doubleValue); // Limit to 2 decimals
+            }
+        }
+        return value.toString();
     }
 }
