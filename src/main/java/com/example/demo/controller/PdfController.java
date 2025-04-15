@@ -11,7 +11,11 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+
 @CrossOrigin(origins = "https://ngocvu05.github.io/lover-project/")
+
+//@CrossOrigin(origins = "http://127.0.0.1")
+
 @RestController
 @RequestMapping("/api")
 public class PdfController {
